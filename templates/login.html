@@ -1,0 +1,200 @@
+<!doctype html>
+<!--作者：胡斌 时间：2019-6-27-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>云图集-云端照片库</title>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static 'img/YunTuji.ico' %}" type="image/x-icon"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'layui/css/layui.css' %}">
+    <script type="text/javascript" src="{% static 'layui/layui.js' %}"></script>
+    <script src="{% static 'js/jquery-3.4.1.js' %}"></script>
+    <script src="{% static 'js/login.js' %}"></script>
+
+
+</head>
+<body>
+
+<div class='layui-carousel' id='login_main'>
+    <div carousel-item>
+        <div class='login-index'>
+            <div>
+                <div class="login-wrap">
+                    <div class="login-html">
+                        <input id="tab-1" type="radio" name="tab" class="sign-in" checked/><label for="tab-1"
+                                                                                                  class="tab">登录</label>
+                        <input id="tab-2" type="radio" name="tab" class="sign-up"/><label for="tab-2"
+                                                                                          class="tab">注册</label>
+                        <div class="login-form">
+                            <div class="sign-in-htm">
+                                <form name="login" method="post" action="/admin_login/"
+                                      enctype="application/x-www-form-urlencoded">
+                                    {% csrf_token %}
+                                    <div class="group">
+                                        <label for="login_user" class="label">用户名<span id="login_one"
+                                                                                       class="right"></span></label>
+                                        <input id="login_user" type="text" class="input" name="login_username"
+                                               style="color:black;"/>
+                                    </div>
+                                    <div class="group">
+                                        <label for="login_pass" class="label">密码<span id="login_two"
+                                                                                      class="right"></span></label>
+                                        <input id="login_pass" type="password" class="input" name="login_pwd"
+                                               style="color:black;"/>
+                                    </div>
+                                    <div class="group">
+                                        <input id="check" type="checkbox" class="check"/>
+                                        <label for="check"><span class="icon"></span> 记住密码</label>
+                                    </div>
+                                    <div class="group">
+                                        <input type="button" class="button" value="登录" id="login_form"/>
+                                    </div>
+                                </form>
+                                <div class="group"><label id="login_fault"></label></div>
+
+                                <div class="hr"></div>
+                                <div class="foot-lnk">
+                                    <a href="#forgot">忘记密码?</a>
+                                </div>
+                            </div>
+
+                            <div class="sign-up-htm">
+                                <form name="register" method="post" action="admin_register">
+                                    {% csrf_token %}
+                                    <div class="group">
+                                        <label for="reg_user" class="label">用户名<span id="login_three"
+                                                                                     class="right"></span></label>
+                                        <input id="reg_user" type="text" class="input" name="reg_username"
+                                               style="color:black;"/>
+                                    </div>
+                                    <div class="group">
+                                        <label for="reg_pass" class="label">密码<span id="login_four"
+                                                                                    class="right"></span></label>
+                                        <input id="reg_pass" type="password" class="input" name="reg_pwd"
+                                               style="color:black;"/>
+                                    </div>
+                                    <div class="group">
+                                        <label for="confirm_pass" class="label">确认密码<span id="login_five"
+                                                                                          class="right"></span></label>
+                                        <input id="confirm_pass" type="password" class="input" style="color:black;"/>
+                                    </div>
+                                    <div class="group">
+                                        <label for="email" class="label">邮箱<span id="login_six"
+                                                                                 class="right"></span></label>
+                                        <input id="email" type="email" class="input" name="reg_email_addr"
+                                               style="color:black;"/>
+                                    </div>
+                                    <div class="group">
+                                        <label for="checkCode" class="label">请输入邮箱验证码<span id="login_seven"
+                                                                                           class="right"></span></label>
+                                        <input id="checkCode" type="check" class="input" name="checkCode"
+                                               style="display: inline;width:55%;color:black;">
+                                        <input type="button" class="button" value="获得验证码" name="getCheckCode"
+                                               style="display:inline;width:38%;margin-left: 9px;">
+                                    </div>
+                                    <div class="group">
+                                        <input type="button" class="button" value="注册" id="reg_btn"/>
+                                    </div>
+                                </form>
+                                <div class="hr"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div>
+
+            </div>
+        </div>
+        <div class="storage_photo">
+            <div class="con-title1" style="margin-bottom: 80px;">
+                <p class="con-title1-p1">云图集</p>
+            </div>
+            <div class="str_wrap" style="height:306px">
+                <div class="gundong" style="left: 0px;position: absolute;">
+                    <img src="{% static 'img/gundong.png' %}">
+                    <img src="{% static 'img/gundong.png' %}">
+                    <img src="{% static 'img/gundong.png' %}">
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="thirdly_page">
+
+                <div class="thirdly_guide1" style="margin-right: 65%;">
+                    <p class="thirdly_guide1_p1">简单易用上手快</p>
+                </div>
+                <img src="{% static 'img/page3_img2.png' %}" class="thirdly_guide2" style="margin-left: 50%;">
+
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var btn_flag = 60;
+    var timer, timeout;
+    $(document).ready(function () {
+        $("#login_form").click(function () {
+            var account = $("#login_user").val();
+            var pwd = $("#login_pass").val();
+
+            $.post("{% url 'admin_login' %}", {'login_username': account, 'login_pwd': pwd}, function (ret) {
+                if (ret.status == 'failed') {
+                    alert(ret.reason);
+                } else {
+                    window.location.href = "{% url 'change_to_homepage' %}"
+                }
+            })
+        })
+        $("#reg_btn").click(function () {
+            var username = $("#reg_user").val(),
+                pwd = $("#reg_pass").val(),
+                checkCode = $("#checkCode").val(),
+                email = $("#email").val();
+
+            $.post("{% url 'admin_register' %}", {
+                    'reg_username': username,
+                    'reg_pwd': pwd,
+                    'reg_email_addr': email,
+                    'reg_chech_code': checkCode
+                }, function (ret) {
+                    if (ret.status == 'success') {
+                        alert("恭喜你注册成功了！请记住你的账号" + ret.account);
+                    } else {
+                        alert(ret.reason);
+                    }
+                }
+            )
+        })
+        $("input[name='getCheckCode']").click(function () {
+            var email_addr = $("#email").val();
+            if (btn_flag == 60) {
+                $.post({% url 'get_checkCode' %}, {'reg_email_addr': email_addr}, function (ret) {
+                    if (ret.status == 'success') {
+
+                        timer = setInterval(function () {
+                            $("input[name='getCheckCode']").disabled = true;
+                            $("input[name='getCheckCode']").val(btn_flag + 's');
+                            btn_flag--;
+                        }, 1000)
+                        timeout = setTimeout(function () {
+                            clearInterval(timer);
+                            $("input[name='getCheckCode']").disabled = false;
+                            btn_flag = 60;
+                            $("input[name='getCheckCode']").val("重新获取验证码");
+                        }, 60000)
+                    }
+
+
+                })
+            }
+            }
+        )
+    })
+
+
+</script>
+</body>
+</html>

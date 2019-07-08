@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<!--相册界面-->
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>YunTuji</title>
+    <link rel="shortcut icon" href="{% static 'img/YunTuji.ico' %}" type="image/x-icon"/>
+    <link rel="stylesheet" href="{% static 'layui/css/layui.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/lightgallery.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}" type="text/css">
+
+
+    <script src="{% static 'layui/layui.js' %}"></script>
+    <script src="{% static 'js/jquery-3.4.1.js' %}"></script>
+    <script src="{% static 'js/lightgallery-all.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+</head>
+<body class="layui-layout-body">
+		<div class="layui-layout layui-layout-admin">
+
+			<!-- 头部区域（可配合layui已有的水平导航） -->
+			<div class="layui-header">
+				<div class="layui-logo">YunTuji</div>
+
+				<ul class="layui-nav layui-layout-right">
+					<li id="navright" class="layui-nav-item">
+						<a href="javascript:;">
+							<img src={% static 'img/11.jpg' %} class="layui-nav-img">
+							名字
+						</a>
+						<dl class="layui-nav-child">
+							<dd><a href="xinxi">个人信息</a></dd>
+							<dd><a href="shezhi">系统设置</a></dd>
+							<dd><a href="">会员中心</a></dd>
+							<dd><a href="fankui">意见反馈</a></dd>
+							<dd><a href="bangzhu">使用帮助</a></dd>
+						</dl>
+					</li>
+					<li class="layui-nav-item"><a href="">退了</a></li>
+				</ul>
+			</div>
+
+			<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+			<div class="layui-side layui-bg-black">
+				<div class="layui-side-scroll">
+					<ul class="layui-nav layui-nav-tree" lay-filter="test">
+						<li class="layui-nav-item layui-nav-itemed"><a href="">相册</a></li>
+						<li class="layui-nav-item"><a href="">回收站</a></li>
+						<li class="layui-nav-item ">
+							<a class="" href="javascript:;">个人中心</a>
+							<dl class="layui-nav-child">
+								<dd><a href="javascript:;">个人信息</a></dd>
+								<dd><a href="javascript:;">系统设置</a></dd>
+								<dd><a href="javascript:;">会员中心</a></dd>
+								<dd><a href="javascript:;">意见反馈</a></dd>
+								<dd><a href="javascript:;">使用帮助</a></dd>
+							</dl>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<!--主体-->
+			<div class="layui-body">
+				<!--上方工具栏-->
+				<div class="toolbar">
+					<div id="toolbarleft1" class="layui-btn-group">
+						<button type="button" class="layui-btn">时间轴</button>
+						<button type="button" class="layui-btn ">智能分类</button>
+						<button type="button" class="layui-btn">最近上传</button>
+					</div>
+					<div id="toolbarleft2" class="layui-btn-group">
+						<button id="back" type="button" class="layui-btn">返回</button>
+					</div>
+					<div id="toolbarright" class="layui-btn-group">
+						<button id="addalbum" type="button" class="layui-btn">新建相册</button>
+						<button id="upload" type="button" class="layui-btn">上传</button>
+					</div>
+				</div>
+				<!-- 内容主体区域 -->
+				<div style="padding: 20px; background-color: #F2F2F2;">
+
+					<ul id="all-album" class="gallery">
+
+					</ul>
+				</div>
+
+			</div>
+
+			<!-- 底部固定区域 -->
+			<div class="layui-footer">
+				© yuntuji.com - 底部固定区域
+			</div>
+
+		</div>
+
+
+	</body>
+</div>
+
+
+</body>
+</html>
