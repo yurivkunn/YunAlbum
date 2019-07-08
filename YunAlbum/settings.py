@@ -25,7 +25,7 @@ SECRET_KEY = 'sm7rd*bx&j*$^#6c5hp3@oqr(+3t8grwo#ldt4dm!f2i8)m4xa'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -44,7 +44,6 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -77,8 +76,12 @@ WSGI_APPLICATION = 'YunAlbum.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'album',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': '127.0.0.1',
+        'PORT': '3306'
     }
 }
 
@@ -105,18 +108,54 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hans'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'static')
+
+STATICFILES_DIRS = [
+    ('css', os.path.join(STATIC_ROOT, 'css').replace('\\', '/')),
+    ('js', os.path.join(STATIC_ROOT, 'js').replace('\\', '/')),
+    ('img', os.path.join(STATIC_ROOT, 'img').replace('\\', '/')),
+    ('upload', os.path.join(STATIC_ROOT, 'upload').replace('\\', '/')),
+    ('layui', os.path.join(STATIC_ROOT, 'layui').replace('\\', '/')),
+    ('layer', os.path.join(STATIC_ROOT, 'layer').replace('\\', '/')),
+
+    ('fonts', os.path.join(STATIC_ROOT, 'fonts').replace('\\', '/')),
+]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/upload')
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'  # 引擎
+SESSION_CACHE_ALIAS = 'default'  # 使用的缓存别名（默认内存缓存，也可以是memcache），此处别名依赖缓存的设置
+
+SESSION_COOKIE_NAME = "sessionid"  # Session的cookie保存在浏览器上时的key，即：sessionid＝随机字符串
+SESSION_COOKIE_PATH = "/"  # Session的cookie保存的路径
+SESSION_COOKIE_DOMAIN = None  # Session的cookie保存的域名
+SESSION_COOKIE_SECURE = False  # 是否Https传输cookie
+SESSION_COOKIE_HTTPONLY = True  # 是否Session的cookie只支持http传输
+SESSION_COOKIE_AGE = 36000  # Session的cookie失效日期（2周）
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # 是否关闭浏览器使得Session过期
+SESSION_SAVE_EVERY_REQUEST = False  # 是否每次请求都保存Session，默认修改之后才保存
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.126.com'  # 如果是 163 改成 smtp.163.com
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'l2928630897@126.com' # 帐号
+EMAIL_HOST_PASSWORD = 'Lbw1432594991'  # 密码
+DEFAULT_FROM_EMAIL = 'YunAlbum<l2928630897@126.com>'
+

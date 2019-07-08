@@ -1,0 +1,29 @@
+<!doctype html>
+<!--
+作者：胡斌
+时间：2019-6-27
+-->
+<html>
+	<head>
+        {% load static %}
+		<meta charset="UTF-8">
+		<link rel="shortcut icon" href={% static 'img/YunTuji.ico' %} type="image/x-icon"/>
+		<title>YunTuji</title>
+		<!-- 引用控制层插件样式 -->
+		<link rel="stylesheet" href={% static 'css/zyUpload.css' %}  type="text/css">
+		
+		<script type="text/javascript" src="js/jquery-3.4.1.js" ></script>
+		<!-- 引用核心层插件 -->
+		<script type="text/javascript" src="js/zyFile.js" ></script>
+		<!-- 引用控制层插件 -->
+		<script type="text/javascript" src="js/zyUpload.js" ></script>
+		<!-- 引用初始化JS -->
+		<script type="text/javascript" src="js/demo.js" ></script>
+	</head>
+	
+	<body>
+		<h1 style="text-align:center;">云图集</h1>
+	    <div id="demo" class="demo"></div>   
+	</body>
+</html>
+

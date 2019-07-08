@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main</title>
+
+  <style type="text/css">
+    /*div{*/
+    /*  height: 100px;*/
+    /*  width: auto;*/
+    /*}*/
+    ul{
+      list-style: none;
+    }
+    .list li{
+      float: left;
+    }
+    a{
+      display: inline-block;
+      height: 50px;
+      width: 80px;
+      background-color: aquamarine;
+      line-height: 50px;
+      text-align: center;
+      /*border: 1px rebeccapurple solid;*/
+      text-decoration: none;
+    }
+    a:hover{
+      background-color: gold;
+      color: red;
+    }
+  </style>
+
+  <script>
+      window.onload = function () {
+       var photo = [];
+          {% load static %}
+          {% for foo in p %}
+              var url = "{% static 'upload' %}/{{ foo }}";
+              photo.push(url);
+          {% endfor %}
+
+        var box = document.getElementById("box");
+        for (var i = 0; i < photo.length; ++i){
+          var imgNode = document.createElement("img");
+          imgNode.src = photo[i];
+          imgNode.style = "max-height:300px; max-width:300px";
+          box.appendChild(imgNode);
+        }
+      }
+	</script>
+</head>
+<body>
+
+  <div>
+    <div style="float: left">
+        {% load static %}
+      <img src={% static 'img/YunTuji.jpg' %} style="max-height:100px" />
+    </div>
+    <div style="float: right">
+      <ul class="list">
+
+        <li><a href="{% url 'changeToUpload' %}">上传</a></li>
+        <li><a href="">个人中心</a></li>
+      </ul>
+    </div>
+  </div>
+  <hr style="clear: both">
+  <div id="box" style="clear: both"></div>
+</body>
+</html>

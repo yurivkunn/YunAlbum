@@ -15,7 +15,25 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from MyAlbum import views
+from django.conf.urls import url
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin', admin.site.urls),
+    path('', views.index),
+    url(r'^admin_login/$', views.login, name='admin_login'),
+    url(r'^change_to_homepage/$', views.change_to_homepage, name='change_to_homepage'),
+    url(r'^get_checkCode/$', views.email_auth, name='get_checkCode'),
+    path('admin_register', views.register, name='admin_register'),
+    path('showPict', views.getAllPict, name='showPict'),
+    url(r'^change_to_homepage/getAlbum/$', views.getAlbum, name='getAlbum'),
+    url(r'^change_to_homepage/logout/$', views.logout, name='logout'),
+    url(r'^change_to_homepage/addAlbum/$', views.addAlbum, name='addAlbum'),
+
+    url(r'^change_to_homepage/xinxi/$', views.changToInfo, name='xinxi'),
+    url(r'^change_to_homepage/shezhi/$', views.changToSetting, name='shezhi'),
+    url(r'^change_to_homepage/fankui/$', views.changToFankui, name='fankui'),
+    url(r'^change_to_homepage/bangzhu/$', views.changToHelp, name='bangzhu'),
+    url(r'^upload/$', views.upload, name='upload'),
+    path('changeToUpload', views.changToUpload, name='changeToUpload'),
 ]

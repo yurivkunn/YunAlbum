@@ -1,0 +1,60 @@
+/*自定义添加的css
+  相册界面
+*/
+.gallery {
+	list-style: none;
+}
+
+.item {
+	position: relative;
+	width: 160px;
+	height: 160px;
+	box-shadow: 0 0 3px #555;
+	background-color: #FFF;
+	padding: 5px;
+	margin: 7px 0px 0px 7px;
+	/* display: table-cell; */
+	text-align: center; 
+	line-height: 160px;
+	/* vertical-align: middle; */
+	cursor: pointer;
+	float: left;
+	/* -moz-transition: all 0.3s ease;
+			  -o-transition: all 0.3s ease;
+			  -webkit-transition: all 0.3s ease;
+			  transition: all 0.3s ease;
+			  -webkit-filter: grayscale(100%);
+			  filter: grayscale(100%); */
+}
+
+/* .item:hover {
+			  -moz-transform: scale(1.04, 1.04);
+			  -ms-transform: scale(1.04, 1.04);
+			  -webkit-transform: scale(1.04, 1.04);
+			  transform: scale(1.04, 1.04);
+			  box-shadow: 0 0 5px #555;
+			  -webkit-filter: grayscale(0%);
+			  filter: grayscale(0%);
+			} */
+.item .pic {
+	max-width: 100%;
+	max-height: 100%;
+	margin: 0;
+	position: relative;
+	/* top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%); */
+}
+
+.item .label {
+	position: absolute;
+	top: 45%; 
+	left: 50%; 
+	transform: translate(-50%, 0); 
+	color: white;
+	/* overflow: hidden; 
+	text-overflow: ellipsis;
+	无法处理标签文字过多的问题*/
+}
+
+/*上面是自定义添加的css*/

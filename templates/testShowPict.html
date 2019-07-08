@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+
+      window.onload = function () {
+
+          var photo = [];
+          {% load static %}
+          {% for foo in p %}
+              var url = "http://127.0.0.1:8000/static/upload/{{ foo }}";
+              photo.push(url);
+          {% endfor %}
+
+
+
+        var box = document.getElementById("box");
+        for (var i = 0; i < photo.length; ++i){
+          var imgNode = document.createElement("img");
+          imgNode.style .width = "100px";
+          imgNode.style.height = "100px";
+          imgNode.setAttribute("src",photo[i]);
+          box.appendChild(imgNode);
+        }
+
+      }
+	</script>
+</head>
+<body>
+<div id="box"></div>
+</body>
+</html>
