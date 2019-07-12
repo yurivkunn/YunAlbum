@@ -131,8 +131,6 @@ STATICFILES_DIRS = [
     ('img', os.path.join(STATIC_ROOT, 'img').replace('\\', '/')),
     ('upload', os.path.join(STATIC_ROOT, 'upload').replace('\\', '/')),
     ('layui', os.path.join(STATIC_ROOT, 'layui').replace('\\', '/')),
-    ('layer', os.path.join(STATIC_ROOT, 'layer').replace('\\', '/')),
-
     ('fonts', os.path.join(STATIC_ROOT, 'fonts').replace('\\', '/')),
 ]
 

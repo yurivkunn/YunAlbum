@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
-<!--相册界面-->
+<!--回收站界面-->
 <head>
-    {% load static %}
     <meta charset="utf-8">
+    {% load static %}
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>YunTuji</title>
     <link rel="shortcut icon" href="{% static 'img/YunTuji.ico' %}" type="image/x-icon"/>
@@ -12,13 +12,10 @@
     <link rel="stylesheet" href="{% static 'css/lightgallery.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/normalize.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/main.css' %}" type="text/css">
-
-
-    <script src="{% static 'layui/layui.js' %}"></script>
+     <script src="{% static 'layui/layui.js' %}"></script>
     <script src="{% static 'js/jquery-3.4.1.js' %}"></script>
     <script src="{% static 'js/lightgallery-all.min.js' %}"></script>
-    <script src="{% static 'js/test.js' %}"></script>
-
+    <script src="{% static 'js/recycle.js' %}"></script>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -57,7 +54,7 @@
                 <li class="layui-nav-item layui-nav-itemed">
                     <a href="{% url 'change_to_homepage' %}">相册</a>
                 </li>
-                <li class="layui-nav-item" style="background-color:transparent;">
+                <li class="layui-nav-item" style="background-color: transparent;">
                     <a id="recent" href="javascript:;" style="background-color: transparent;">图片</a>
                 </li>
                 <li class="layui-nav-item"><a href="{% url 'recycle' %}">回收站</a></li>
@@ -67,37 +64,24 @@
     </div>
 
     <!--主体-->
-    <div class="layui-body"
-         style="background-image: {% static 'img/背景2.png' %};background-size: 75% 100%;background-repeat: no-repeat;background-position-x: 150px;">
+    <div class="layui-body">
         <!--上方工具栏-->
-        <div class="toolbar">
-            <div id="toolbarleft" class="layui-btn-group">
-            </div>
-            <div id="toolbarright" class="layui-btn-group">
-                <button id="back" type="button" class="customerbtn"></button>
-                <button id="addalbum" type="button" class="customerbtn">新建相册</button>
-                <button id="upload" type="button" class="customerbtn">上传</button>
-                <input type="file" id="image-upload" style="visibility: hidden;" multiple>
-            </div>
-        </div>
         <!-- 内容主体区域 -->
-        <div id="main">
+        <div id="main" style="padding: 20px; background-color: #F2F2F2;">
             <ul id="all-album" class="gallery">
-
             </ul>
         </div>
 
     </div>
-    <!-- 内容主体区域 -->
-    <div id="main" style="padding: 20px; background-color: #F2F2F2;">
-        <ul id="all-album" class="gallery">
-        </ul>
+
+    <!-- 底部固定区域 -->
+    <div class="layui-footer">
+        © yuntuji.com - 底部固定区域
     </div>
 
 </div>
 
 
-</div>
 
 </body>
 </html>

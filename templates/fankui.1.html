@@ -10,6 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="shortcut icon" href="{% static 'img/YunTuji.ico' %}" type="image/x-icon"/>
     <link rel="stylesheet" href="{% static 'layui/css/layui.css' %}" media="all">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" type="text/css">
+    <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
     <script src="{% static 'layui/layui.js' %}" charset="utf-8"></script>
 
 
@@ -24,50 +26,25 @@
         <div class="layui-logo">YunTuji</div>
 
         <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <div class="container">
+                    <form class="parent">
+                        <input id="content" type="text" class="search" placeholder="搜索">
+                        <img id="search" src="{% static 'img/sousuo.png' %}" class="btn" alt="">
+                    </form>
+                </div>
+            </li>
             <li id="navright" class="layui-nav-item">
                 <a href="javascript:;">
-                    <img src="{% static 'img/11.jpg' %}" class="layui-nav-img">
-
-                    名字
                 </a>
-                <dl class="layui-nav-child" style="border-color: lightyellow;">
-                    <dd><img src="http://t.cn/RCzsdCq"
-                             style="margin-left:20px; width:70px; height:70px; border-radius:35px;overflow: hidden;">
-                    </dd>
-                    <dd>
-
-                        <font style="color:#000000;margin-left:30px;"><b>贤心</b></font>
-                    </dd>
-                    <dd>
-                        <img src="{% static '' %}" style="margin-left:20px"/>
-                        <input id="Button1" type="button" style="background-color: white;border-style: none;"
-                               value="个人信息" onclick="ShowDiv('MyDiv1','fade')"/>
-                    </dd>
-                    <dd>
-                        <img src="{% static '' %}" style="margin-left:20px "/>
-                        <input id="Button1" type="button" style="background-color: white;border-style: none;"
-                               value="系统设置" onclick="ShowDiv('MyDiv2','fade')"/>
-                    </dd>
-                    <dd>
-                        <img src="{% static '' %}" style="margin-left:20px"/>
-                        <input id="Button1" type="button" style="background-color: white;border-style: none;"
-                               value="会员中心" onclick="ShowDiv('MyDiv3','fade')"/>
-
-                    </dd>
-                    <dd>
-                        <img src="{% static '' %}" style="margin-left:20px"/>
-                        <input id="Button1" type="button" style="background-color: white;border-style: none;"
-                               value="意见反馈" onclick="ShowDiv('MyDiv4','fade')"/>
-
-                    </dd>
-                    <dd>
-                        <img src="{% static '' %}" style="margin-left:20px"/>
-                        <input id="Button5" type="button" style="background-color: white;border-style: none;"
-                               value="使用帮助"/>
-                    </dd>
+                <dl class="layui-nav-child">
+                    <dd><a href="../xinxi">个人信息</a></dd>
+                    <dd><a href="../shezhi">系统设置</a></dd>
+                    <dd><a href="../fankui">意见反馈</a></dd>
+                    <dd><a href="../bangzhu">使用帮助</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="">退了</a></li>
+            <li class="layui-nav-item"><a href="{% url 'logout' %}">退出登录</a></li>
         </ul>
     </div>
 
@@ -75,45 +52,69 @@
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                <li class="layui-nav-item layui-nav-itemed"><a href="">相册</a></li>
-                <li class="layui-nav-item"><a href="">回收站</a></li>
-                <li class="layui-nav-item ">
-                    <a class="" href="javascript:;">个人中心</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">个人信息</a></dd>
-                        <dd><a href="javascript:;">系统设置</a></dd>
-                        <dd><a href="javascript:;">会员中心</a></dd>
-                        <dd><a href="javascript:;">意见反馈</a></dd>
-                        <dd><a href="javascript:;">使用帮助</a></dd>
-                    </dl>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="{% url 'change_to_homepage' %}">相册</a>
                 </li>
+                <li class="layui-nav-item">
+                    <a id="recent" href="javascript:;">图片</a>
+                </li>
+                <li class="layui-nav-item"><a href="{% url 'recycle' %}">回收站</a></li>
+
             </ul>
         </div>
     </div>
 
     <!--主体-->
-    <div class="layui-body">
-        <!--上方工具栏-->
+    <div class="layui-body"
+         style="background-image: {% static 'img/背景2.png' %};background-size: 75% 100%;background-repeat: no-repeat;background-position-x: 150px;">
+
+        <!-- 内容主体区域 -->
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
             <legend>意见反馈</legend>
         </fieldset>
-        <div style="margin-left: 200px;margin-top: 100px;">
-            <img src="{% static 'img/gou.png' %}" style="width: 100px;height: 100px;"/>
-            <font size="7" color="#3F3F3F"><b>谢谢您的反馈，我们会尽快处理！</b></font>
 
+        <form class="layui-form" action="">
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">反馈：</label>
+                <div class="layui-input-block" style="width: 700px;">
+                    <textarea class="layui-textarea" placeholder="请输入内容"></textarea>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">频率</label>
+                <div class="layui-input-block">
+                    <input name="sex" title="一次" type="radio" checked="" value="一次">
+                    <input name="sex" title="很少" type="radio" value="很少">
+                    <input name="sex" title="经常" type="radio" value="经常">
+                </div>
+            </div>
+
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">联系方式</label>
+                <div class="layui-input-block" style="width: 700px;">
+                    <input name="title" class="layui-input" type="text" placeholder="邮箱或手机号" autocomplete="off"
+                           lay-verify="title">
+                </div>
+            </div>
+
+
+        </form>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" id="submitt">立即提交</button>
+                <button class="layui-btn layui-btn-primary" type="reset">重置</button>
+            </div>
         </div>
-    </div>
 
-    <!-- 底部固定区域 -->
-    <div class="layui-footer">
-        © yuntuji.com - 底部固定区域
     </div>
 
 </div>
 <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
 <script src="{% static 'js/lightgallery-all.min.js' %}"></script>
-<script src="{% static 'js/test.js' %}"></script>
 <script>
+    var editIndex;
     layui.use(['form', 'layedit', 'laydate', 'element'], function () {
         var form = layui.form,
             layer = layui.layer,
@@ -127,7 +128,36 @@
         laydate.render({
             elem: '#date1'
         });
+        //创建一个编辑器
+        editIndex = layedit.build('LAY_demo_editor');
+        $("#search").click(function () {
+            if ($("#content").val().trim().length > 0) {
+                window.location.href = 'search/' + $("#content").val();
+            }else{
+                alert("搜索内容不能为空！");
+            }
+        });
     });
+    var setting = '{{ message.setting }}'.replace('&#39;', '\'');
+    setting.replace('[', '');
+    setting = setting.split(',');
+    $("#submitt").click(function () {
+        console.log("11111");
+        window.location.href = '{% url 'success' %}';
+    });
+    $(document).ready(function () {
+        var pict = '{{ message.pict.path }}';
+        var user = '{{ message.user }}';
+        userInfo(pict, user);
+    });
+
+    function userInfo(url, name) {
+        var $info = $("<a href=\"javascript:;\">\n" +
+            "<img src=\" " + url + " \" class=\"layui-nav-img\">\n" +
+            name +
+            "</a>");
+        $("#navright").prepend($info);
+    }
 </script>
 
 </body>

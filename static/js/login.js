@@ -127,10 +127,10 @@ window.onload=function () {
 	var gundong_div = document.getElementsByClassName("gundong")[0];
 	gundong_div.onmouseover = function(){
 		window.clearInterval(timer);
-	}
+	};
 	gundong_div.onmouseleave = function(){
 		gundong();
-	}
+	};
 	window.onmousewheel = function(e){
 		ee = e || window.event;
 		var btn = document.getElementsByClassName("layui-carousel-arrow");

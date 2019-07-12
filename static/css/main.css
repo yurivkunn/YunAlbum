@@ -3,18 +3,19 @@
 */
 .gallery {
 	list-style: none;
+	display: inline-block;
 }
 
 .item {
 	position: relative;
-	width: 160px;
-	height: 160px;
+	width: 250px;
+	height: 300px;
 	box-shadow: 0 0 3px #555;
 	background-color: #FFF;
 	padding: 5px;
-	margin: 7px 0px 0px 7px;
+	margin: 40px 0px 0px 50px;
 	/* display: table-cell; */
-	text-align: center; 
+	text-align: center;
 	line-height: 160px;
 	/* vertical-align: middle; */
 	cursor: pointer;
@@ -36,9 +37,10 @@
 			  -webkit-filter: grayscale(0%);
 			  filter: grayscale(0%);
 			} */
+
 .item .pic {
 	max-width: 100%;
-	max-height: 100%;
+	max-height: 90%;
 	margin: 0;
 	position: relative;
 	/* top: 50%;
@@ -48,13 +50,119 @@
 
 .item .label {
 	position: absolute;
-	top: 45%; 
-	left: 50%; 
-	transform: translate(-50%, 0); 
-	color: white;
+	top: 68%;
+	left: 50%;
+	width: 100%;
+	height: 40px;
+	transform: translate(-50%, 0);
+	color: black;
 	/* overflow: hidden; 
 	text-overflow: ellipsis;
 	无法处理标签文字过多的问题*/
+}
+.item .delete {
+	position: absolute;
+	top: 91%;
+	left: 89%;
+	height: 16px;
+	width: 16px;
+	opacity: .5;
+}
+.item .delete:hover {
+	/* position: absolute;
+	top: 90%;
+	left: -15%;
+	height: 16px;
+	width: 16px; */
+	opacity: .8;
+	transform: scale(1.2, 1.2);
+}
+
+.item .edit {
+	position: absolute;
+	top: 91%;
+	left: 75%;
+	height: 16px;
+	width: 16px;
+	opacity: .6;
+}
+
+.item .edit:hover {
+	/* position: absolute;
+	top: 90%;
+	left: -15%;
+	height: 16px;
+	width: 16px; */
+	opacity: 1;
+	transform: scale(1.2, 1.2);
+}
+
+.customerbtn {
+	vertical-align: middle;
+	outline: 0;
+	-webkit-appearance: none;
+	transition: all .3s;
+	-webkit-transition: all .3s;
+	box-sizing: border-box;
+	display: inline-block;
+	height: 38px;
+	line-height: 38px;
+	padding: 0 18px;
+	background-color: white;
+	color: black;
+	white-space: nowrap;
+	text-align: center;
+	font-size: 14px;
+	border: none;
+	border-radius: 2px;
+	cursor: pointer;
+}
+
+.customerbtn:hover {
+	opacity: .8;
+	filter: alpha(opacity=80);
+	color: #fff;
+	background-color: #01AAED;
+}
+
+.toolbar {
+	height: 50px;
+	line-height: 50px;
+}
+
+.container {
+    height: 42px;
+    width: 170px;
+    margin-top:18px;
+	
+	
+}
+
+.parent {
+    position: relative;
+}
+
+.search {
+    width: 150px;
+    height: 25px;
+    border-radius: 15px;
+    outline: none;
+    border: 2px solid dimgray;
+    padding-left: 20px;
+    position: absolute;
+	background-color: #23262E;
+	color: darkgrey;
+}
+
+.btn {
+    height: 15px;
+    width: 15px;
+	position: absolute;
+    top:6px;
+     left: 150px;
+    border: none;
+    outline: none;
+    cursor: pointer;
 }
 
 /*上面是自定义添加的css*/

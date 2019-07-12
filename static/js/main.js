@@ -83,13 +83,10 @@ $(function () {
         showphoto(arr);
         $("#all-album").lightGallery();
     });
-
-
     //传递相册信息，得到相册内图片并展示
+});
 
 
-
-})
 //创建返回按钮
     function createreturn() {
         var $return = $("<button id=\"return\" type=\"button\" class=\"layui-btn\">返回</button>");

@@ -10,6 +10,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="shortcut icon" href="{% static 'img/YunTuji.ico' %}" type="image/x-icon"/>
     <link rel="stylesheet" href="{% static 'layui/css/layui.css' %}" media="all">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" media="all">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" type="text/css">
+    <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
     <script src="{% static 'layui/layui.js' %}" charset="utf-8"></script>
 
 
@@ -18,81 +21,50 @@
 
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
-
-    <!-- 头部区域（可配合layui已有的水平导航） -->
     <div class="layui-header">
         <div class="layui-logo">YunTuji</div>
 
         <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <div class="container">
+                    <form class="parent">
+                        <input id="content" type="text" class="search" placeholder="搜索">
+                        <img id="search" src="{% static 'img/sousuo.png' %}" class="btn" alt="">
+                    </form>
+                </div>
+            </li>
             <li id="navright" class="layui-nav-item">
                 <a href="javascript:;">
-                    <img src="{% static 'img/11.jpg' %}" class="layui-nav-img">
-                    名字
                 </a>
-                <dl class="layui-nav-child" style="border-color: lightyellow;">
-                    <dd><img src="http://t.cn/RCzsdCq"
-                             style="margin-left:20px; width:70px; height:70px; border-radius:35px;overflow: hidden;">
-                    </dd>
-                    <dd>
-
-                        <font style="color:#000000;margin-left:40px;"><b>贤心</b></font>
-                    </dd>
-                    <dd>
-                        <img src="036-profile.png" style="margin-left:20px"/>
-                        <input id="Button1" type="button" style="background-color: white;border-style: none;"
-                               value="个人信息" onclick="ShowDiv('MyDiv1','fade')"/>
-                    </dd>
-                    <dd>
-                        <img src="490-svg.png" style="margin-left:20px "/>
-                        <input id="Button1" type="button" style="background-color: white;border-style: none;"
-                               value="系统设置" onclick="ShowDiv('MyDiv2','fade')"/>
-                    </dd>
-                    <dd>
-                        <img src="063-coin-yen.png" style="margin-left:20px"/>
-                        <input id="Button1" type="button" style="background-color: white;border-style: none;"
-                               value="会员中心" onclick="ShowDiv('MyDiv3','fade')"/>
-
-                    </dd>
-                    <dd>
-                        <img src="006-pencil.png" style="margin-left:20px"/>
-                        <input id="Button1" type="button" style="background-color: white;border-style: none;"
-                               value="意见反馈" onclick="ShowDiv('MyDiv4','fade')"/>
-
-                    </dd>
-                    <dd>
-                        <img src="074-compass.png" style="margin-left:20px"/>
-                        <input id="Button5" type="button" style="background-color: white;border-style: none;"
-                               value="使用帮助"/>
-                    </dd>
+                <dl class="layui-nav-child">
+                    <dd><a href="../xinxi">个人信息</a></dd>
+                    <dd><a href="../shezhi">系统设置</a></dd>
+                    <dd><a href="../fankui">意见反馈</a></dd>
+                    <dd><a href="../bangzhu">使用帮助</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="">退了</a></li>
+            <li class="layui-nav-item"><a href="{% url 'logout' %}">退出登录</a></li>
         </ul>
     </div>
 
     <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-    <div class="layui-side layui-bg-black">
+     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                <li class="layui-nav-item layui-nav-itemed"><a href="">相册</a></li>
-                <li class="layui-nav-item"><a href="">回收站</a></li>
-                <li class="layui-nav-item ">
-                    <a class="" href="javascript:;">个人中心</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">个人信息</a></dd>
-                        <dd><a href="javascript:;">系统设置</a></dd>
-                        <dd><a href="javascript:;">会员中心</a></dd>
-                        <dd><a href="javascript:;">意见反馈</a></dd>
-                        <dd><a href="javascript:;">使用帮助</a></dd>
-                    </dl>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="{% url 'change_to_homepage' %}">相册</a>
                 </li>
+                <li class="layui-nav-item">
+                    <a id="recent" href="javascript:;">图片</a>
+                </li>
+                <li class="layui-nav-item"><a href="{% url 'recycle' %}">回收站</a></li>
+
             </ul>
         </div>
     </div>
 
-    <!--主体-->
-    <div class="layui-body">
-        <!--上方工具栏-->
+    <div class="layui-body"
+         style="background-image: {% static 'img/背景2.png' %};background-size: 75% 100%;background-repeat: no-repeat;background-position-x: 150px;overflow: hidden;">
 
         <!-- 内容主体区域 -->
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
@@ -104,8 +76,8 @@
             <div class="layui-form-item">
                 <label class=" layui-form-label">上传时间</label>
                 <div class="layui-input-block">
-                    <input name="sex" title="显示" type="radio" checked="" value="显示">
-                    <input name="sex" title="关闭" type="radio" value="关闭">
+                    <input name="sex" title="显示" type="radio" value="显示">
+                    <input name="sex" title="关闭" type="radio" checked="" value="关闭">
 
                 </div>
             </div>
@@ -114,8 +86,8 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">位置</label>
                 <div class="layui-input-block">
-                    <input name="sex" title="显示" type="radio" checked="" value="显示">
-                    <input name="sex" title="关闭" type="radio" value="关闭">
+                    <input name="sex" title="显示" type="radio" value="显示">
+                    <input name="sex" title="关闭" type="radio" checked="" value="关闭">
 
                 </div>
             </div>
@@ -124,30 +96,34 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">风格</label>
                 <div class="layui-input-block">
-                    <input name="sex" title="芙绿" type="radio" checked="" value="芙绿">
-                    <input name="sex" title="酷黑" type="radio" value="酷黑">
-                    <input name="sex" title="雅白" type="radio" value="雅白">
-                    <input name="sex" title="樱粉" type="radio" value="樱粉">
-
-
+                    <input name="sex" title="芙绿" type="radio" value="芙绿" id="green">
+                    <input name="sex" title="酷黑" type="radio" value="酷黑" id="black">
+                    <input name="sex" title="炫蓝" type="radio" value="炫蓝" id="blue">
+                    <input name="sex" title="樱粉" type="radio" value="樱粉" id="pink">
                 </div>
             </div>
 
 
-    </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" id="confirm">确定</button>
+                    <button class="layui-btn layui-btn-primary" type="reset" id="go_back">重置</button>
+                </div>
+            </div>
+        </form>
 
-    <!-- 底部固定区域 -->
-    <div class="layui-footer">
-        © yuntuji.com - 底部固定区域
-    </div>
 
+        <div class="layui-footer">
+            <!-- 底部固定区域 -->
+            © layui.com - 底部固定区域
+        </div>
+    </div>
 </div>
-<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
-<script src="{% static 'js/lightgallery-all.min.js' %}"></script>
-<script src="{% static 'js/test.js' %}"></script>
 <script>
     //JavaScript代码区域
+    var editIndex;
     layui.use(['form', 'layedit', 'laydate', 'element'], function () {
+
         var form = layui.form,
             layer = layui.layer,
             layedit = layui.layedit,
@@ -160,9 +136,83 @@
         laydate.render({
             elem: '#date1'
         });
+        editIndex = layedit.build('LAY_demo_editor');
     });
     //创建一个编辑器
-    var editIndex = layedit.build('LAY_demo_editor');
+    var setting = '{{ message.setting }}'.replace(/&#39;/g, '\'');
+
+    setting = setting.trim().split(',');
+    setting[0] = setting[0].trim().split('[')[1];
+    setting[1] = setting[1].trim().split(']')[0];
+
+    $(document).ready(function () {
+        var pict = '{{ message.pict.path }}';
+        var user = '{{ message.user }}';
+        userInfo(pict, user);
+        //changeChecked();
+        //setColor();
+
+        $('#confirm').click(function () {
+            //setColor();
+            $.ajax({
+                type: "GET",
+                url: "changeSetting/", //此处填入url
+                async: false,
+                data: {
+                    'color1': setting[0],
+                    'color2': setting[1]
+                },
+                success: function (msg) {
+
+                    //changeChecked();
+                },
+                error: function (xhr) {
+                    alert(xhr.status);
+                }
+            });
+        });
+    });
+
+    function userInfo(url, name) {
+        var $info = $("<a href=\"javascript:;\">\n" +
+            "<img src=\" " + url + " \" class=\"layui-nav-img\">\n" +
+            name +
+            "</a>");
+        $("#navright").prepend($info);
+    }
+
+    function setColor() {
+        if ($("#blue").is(':checked')) {
+            setting = ['#0400aa', '#0600ff'];
+            $(".layui-header").css("background-color", setting[0]);
+            $(".layui-bg-black").css("background-color", setting[1]);
+        } else if ($("#black").is(':checked')) {
+            setting = ['#23262E', '#393D49'];
+            $(".layui-header").css("background-color", setting[0]);
+            $(".layui-bg-black").css("background-color", setting[1]);
+        } else if ($("#green").is(':checked')) {
+            setting = ['#0aa803', '#0ad300'];
+            $(".layui-header").css("background-color", setting[0]);
+            $(".layui-bg-black").css("background-color", setting[1]);
+        } else {
+            setting = ['#d000ce', '#ed05ea'];
+            $(".layui-header").css("background-color", setting[0]);
+            $(".layui-bg-black").css("background-color", setting[1]);
+        }
+    }
+
+    function changeChecked() {
+        if (setting[0] === '#0aa803') {
+            $("#green").attr("checked", 'checked');
+        } else if (setting[0] === '#23262E') {
+            $("#black").attr("checked", 'checked');
+        } else if (setting[0] === '#0400aa') {
+            $("#blue").attr("checked", 'checked');
+        } else {
+            $("#pink").attr("checked", 'checked');
+        }
+    }
+
 </script>
 
 </body>

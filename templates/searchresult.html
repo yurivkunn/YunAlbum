@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<!--相册界面-->
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>YunTuji</title>
+    <link rel="shortcut icon" href="{% static 'img/YunTuji.ico' %}" type="image/x-icon"/>
+    <link rel="stylesheet" href="{% static 'layui/css/layui.css' %}" type="text/css">
+
+    <link rel="stylesheet" href="{% static 'css/lightgallery.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" type="text/css">
+
+
+    <script src="{% static 'layui/layui.js' %}"></script>
+    <script src="{% static 'js/jquery-3.4.1.js' %}"></script>
+    <script src="{% static 'js/lightgallery-all.min.js' %}"></script>
+
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+
+    <!-- 头部区域（可配合layui已有的水平导航） -->
+    <div class="layui-header">
+        <div class="layui-logo">YunTuji</div>
+
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <div class="container">
+                    <form class="parent">
+                        <input id="content" type="text" class="search" placeholder="搜索">
+                        <img id="search" src="{% static 'img/sousuo.png' %}" class="btn" alt="">
+                    </form>
+                </div>
+            </li>
+            <li id="navright" class="layui-nav-item">
+                <a href="javascript:;">
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="xinxi">个人信息</a></dd>
+                    <dd><a href="shezhi">系统设置</a></dd>
+                    <dd><a href="fankui">意见反馈</a></dd>
+                    <dd><a href="bangzhu">使用帮助</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="{% url 'logout' %}">退出</a></li>
+        </ul>
+    </div>
+
+    <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="{% url 'change_to_homepage' %}">相册</a>
+                </li>
+                <li class="layui-nav-item" style="background-color: #009688;">
+                    <a id="recent" href="javascript:;">图片</a>
+                </li>
+                <li class="layui-nav-item"><a href="{% url 'recycle' %}">回收站</a></li>
+
+            </ul>
+        </div>
+    </div>
+
+    <!--主体-->
+    <div class="layui-body">
+        <!--上方工具栏-->
+        <div class="toolbar">
+            <div id="toolbarleft" class="layui-btn-group">
+            </div>
+            <div id="toolbarright" class="layui-btn-group">
+                <button id="back" type="button" class="customerbtn">< 搜索结果</button>
+            </div>
+        </div>
+        <!-- 内容主体区域 -->
+        <div id="main" style="padding: 20px; background-color: #F2F2F2;">
+            <ul id="all-album" class="gallery">
+            </ul>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    var status = "{{ status }}";
+    var path = "{{ path }}".replace(/&#39;/g, '');
+    var pictID = "{{ pictID }}".replace(/&#39;/g, '\"');
+    pictID = JSON.parse(pictID);
+    layui.use(['element'], function () {
+        var $ = layui.jquery,
+            element = layui.element;
+        $.ajax({
+            type: "GET",
+            url: "../getInfo_Album/", //此处填入url
+            success: function (msg) {
+                userInfo(msg.pict.path, msg.userName);
+
+            },
+            error: function (xhr) {
+                alert(xhr.status);
+            }
+        });
+        if (pictID.picture.length == 0) {
+            $("#all-album").html("<img src=\"../../static/img/none.png\">");
+
+        } else {
+            path = path.split('[')[1];
+            path = path.split(']')[0];
+            pathdict = [];
+            pathdict = path.split(',');
+
+            showphoto(pathdict, pictID);
+        }
+
+        //搜索功能
+        $("#search").click(function () {
+            if ($("#content").val().trim().length > 0) {
+                window.location.href = 'search/' + $("#content").val();
+            }
+        });
+        $("#back").click(function () {
+            window.location.href = '{% url 'change_to_homepage' %}';
+        })
+
+    });
+
+    function userInfo(url, name) {
+        var $info = $("<a href=\"javascript:;\">\n" +
+            "<img src=\" " + url + " \" class=\"layui-nav-img\">\n" +
+            name +
+            "</a>");
+        $("#navright").prepend($info);
+    }
+
+    //图片展示--接收后台数据调用
+    function showphoto(urlarr, idarr) {
+        $("#all-album").remove();
+        createUL();
+        $.each(urlarr, function (index, value) {
+            var $currentphoto = $("<li class=\"item\" data-src=\"" + value + "\">\n" +
+                "<img id=\"" + idarr[index] + "\" class=\"pic\" src=\"" + value + "\" alt=\"\" />\n" +
+                "<img class=\"delete\" src=\"{% static 'img/delete.png' %}\" alt=\"\">" +
+                "</li>");
+            $("#all-album").append($currentphoto);
+        });
+        $(".item .delete").click(function () {
+            deletephoto(this.parentElement.children[0].id);
+            this.parentElement.remove();
+            event.cancelBubble = true;
+        });
+    }
+
+    //删除照片时把数据传给数据库
+    function deletephoto(id) {
+        $.ajax({
+            type: "GET",
+            url: "{% url 'deletePhoto' %}", //此处填入url
+            data: {
+                "id": id
+            },
+            success: function (msg) {
+                alert("删除成功！");
+            },
+            error: function (xhr) {
+                alert(xhr.status);
+            }
+        })
+    }
+
+    //创建ul
+    function createUL() {
+        var $ul = $("<ul id=\"all-album\" class=\"gallery\">" +
+            "</ul>");
+        $("#main").append($ul);
+    }
+
+</script>
+</body>
+</html>

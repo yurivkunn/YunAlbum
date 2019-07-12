@@ -62,34 +62,24 @@
         </div>
     </div>
 
-    <div class="layui-body">
+    <div class="layui-body"
+         style="background-image: {% static 'img/背景2.png' %};background-size: 75% 100%;background-repeat: no-repeat;background-position-x: 150px;">
+
         <!-- 内容主体区域 -->
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-            <legend>使用帮助</legend>
+            <legend>意见反馈</legend>
         </fieldset>
-        <blockquote class="layui-elem-quote">
-            <b>1、不小心删除的文件如何找回？</b><br/><br/>
-            如果您删除文件时间较短，可查看回收站，回收站会保存用户10天内删除的文件，您可以手动恢复。
-            回收站有效期延长特权，是指通过图集删除的文件，在回收站中保存的时间。普通用户可享受10天有效期，会员用户可享受30天有效期。当文件的删除时间超过有效期，则会永久删除无法恢复。
-            声明：如果文件删除超过10天或回收站清空，则数据无法找回。因为图集存储数据完全分片存储，绝对私密，后台无法对用户删除文件进行恢复，请谨慎操作，特别是清空回收站时需确认清楚，删除相册时，请确认清楚相册包含内容。感谢！
+        <div style="margin-left: 200px;margin-top: 100px;">
+            <img src="{% static 'img/gou.png' %}" style="width: 100px;height: 100px;"/>
+            <font size="7" color="#3F3F3F"><b>谢谢您的反馈，我们会尽快处理！</b></font>
 
-        </blockquote>
-
-        <blockquote class="layui-elem-quote">
-            <b>2、支持预览的图片格式有哪些？</b><br/><br/>
-            支持图片的格式有：jpg\gif\bmp\png\jpeg等
-        </blockquote>
-
-        <blockquote class="layui-elem-quote">
-            <b>3、如何修改昵称和头像</b><br/><br/>
-            1） 点左下方“个人设置按钮，支持修改自己的昵称和头像
-        </blockquote>
+        </div>
     </div>
 </div>
 
-
 <script>
     //JavaScript代码区域
+
     var editIndex;
     layui.use(['form', 'layedit', 'laydate', 'element'], function () {
         var form = layui.form,
@@ -121,8 +111,6 @@
         var pict = '{{ message.pict.path }}';
         var user = '{{ message.user }}';
         userInfo(pict, user);
-        $(".layui-header").css("background-color", setting[0]);
-        $(".layui-bg-black").css("background-color", setting[1]);
     });
 
     function userInfo(url, name) {

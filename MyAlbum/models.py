@@ -25,8 +25,19 @@ class UserList(models.Model):
     e_mail_address = models.CharField(max_length=40)
     VIP = models.BooleanField()
     registerTime = models.DateField(default=date.today())
+    pictureID = models.IntegerField(default=1)
+    settings = models.CharField(default="['#23262E', '#393D49']", max_length=150)
+    info = models.CharField(null=True, max_length=150)
 
 
+'''
+UserInfo
+
+account
+pictureid 头像图片 default 1
+
+
+'''
 '''
 Storage table
 pictureID 为每个picture获取唯一编号
@@ -37,7 +48,7 @@ altertime 图片的修改时间
 
 
 class Storage(models.Model):
-    pictureID = models.IntegerField(null=False, primary_key=True)
+    pictureID = models.BigIntegerField(null=False, primary_key=True)
     pictureName = models.CharField(max_length=255, null=False)
     path = models.CharField(max_length=255, null=False)
     alterTime = models.DateTimeField(default=timezone.now())
@@ -53,6 +64,8 @@ Storage.pictureID
 class User(models.Model):
     account = models.ForeignKey(UserList, on_delete=models.CASCADE)
     pictureID = models.ForeignKey(Storage, on_delete=models.CASCADE)
+    is_delete = models.BooleanField(default=False)
+    deleteTime = models.DateTimeField(null=True)
 
 
 
@@ -85,13 +98,14 @@ pictureID cover
 
 
 class Album(models.Model):
-    albumID = models.CharField(max_length=20, primary_key=True)
+    albumID = models.BigIntegerField(primary_key=True)
     albumName = models.CharField(max_length=255, null=False)
     account = models.ForeignKey(UserList, null=False, on_delete=models.CASCADE)
     alterTime = models.DateTimeField(default=timezone.now())
     pictureID = models.ForeignKey(Storage, on_delete=models.CASCADE)
     tag_1 = models.CharField(max_length=100)
     custom_Tag_1 = models.CharField(max_length=20, null=True)
+    system = models.BooleanField(default=True)
 
 
 
