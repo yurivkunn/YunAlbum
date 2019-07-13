@@ -60,8 +60,10 @@ def register(request):
 # 处理前端登录请求
 def login(request):
     if request.session.get('is_login', None):
-        message = {'status': 'already'}
-        return JsonResponse(message)
+        _account = request.POST.get('login_username')
+        if _account == request.session.get('user_id', None):
+            message = {'status': 'already'}
+            return JsonResponse(message)
 
     if request.method == "POST":
         _account = request.POST.get('login_username')
@@ -147,6 +149,18 @@ def upload(request):
                 )
                 if albumID == '0':
                     Tools.collectPicture(current_account, pictureId)
+                    message['albumID'] = []
+                    if models.Album.objects.filter(account=current_account).exists():
+                        album = models.Album.objects.filter(account=current_account).order_by('-alterTime')
+                        for _album in album:
+                            path = Tools.getPicturePath(_album.pictureID_id)
+                            message['albumID'].append(_album.albumID)
+                            message['albumID_' + str(_album.albumID)] = {
+                                'albumName': _album.albumName,
+                                'alterTime': _album.alterTime,
+                                'cover': path
+                            }
+                        message['status'] = 'success'
                 else:
                     models.AlbumStorage.objects.create(
                         albumID=models.Album.objects.get(albumID=int(albumID)),
@@ -155,8 +169,14 @@ def upload(request):
                     album = models.Album.objects.get(albumID=albumID)
                     album.pictureID_id = pictureId
                     album.save()
+                    message = Tools.getPictCollect(albumID)
+                    if message:
+                        message['status'] = 'success'
+                    else:
+                        message['status'] = 'no-picture'
                 imgWriter.close()
-            message['status'] = 'success'
+
+
         except Exception as writeE:
             message['status'] = 'failed'
         return JsonResponse(message)
@@ -188,7 +208,8 @@ def getAllPict(request):
             return JsonResponse(message)
     return render(request, 'login.html')
 
-#获得验证码，发送验证邮件
+
+# 获得验证码，发送验证邮件
 def email_auth(request):
     check_Code = Tools.get_CheckCode(6, False)
     email_addr = request.POST.get('reg_email_addr')
@@ -202,14 +223,19 @@ def email_auth(request):
         send_mail('云图集注册验证', message, settings.DEFAULT_FROM_EMAIL, [email_addr], fail_silently=True)
         return JsonResponse({'status': 'success'})
 
+
 '''
 页面初始化加载用户的设置封面和所有相册信息
 '''
+
+
 def getInfo_Album(request):
     if not request.session.get('is_login', None):
         return render(request, 'login.html')
     account = request.session['user_id']
     username = request.session['user_name']
+    print(account)
+    print(username)
     message = {}
     message['userName'] = username
     message['albumID'] = []
@@ -238,7 +264,8 @@ def getInfo_Album(request):
 
     return JsonResponse(message)
 
-#退出登录 跳转至登录界面
+
+# 退出登录 跳转至登录界面
 def logout(request):
     if request.session.get('is_login', None):
         request.session['is_login'] = False
@@ -246,24 +273,41 @@ def logout(request):
         request.session['user_name'] = None
     return render(request, 'login.html')
 
+
 '''
     创建相册的绑定事件，生成新相册的id和默认封面
 '''
+
+
 def addAlbum(request):
     message = {}
+    message['albumID'] = []
     account = request.session['user_id']
     albumName = request.GET.get('name')
     if account is not None and albumName is not None:
         album = Tools.createAlbum(account, albumName, albumName)
-        message = {'status': 'success', 'albumID': album}
+        if models.Album.objects.filter(account=account).exists():
+            album = models.Album.objects.filter(account=account).order_by('-alterTime')
+            for _album in album:
+                path = Tools.getPicturePath(_album.pictureID_id)
+                message['albumID'].append(_album.albumID)
+                message['albumID_' + str(_album.albumID)] = {
+                    'albumName': _album.albumName,
+                    'alterTime': _album.alterTime,
+                    'cover': path
+                }
+        message['status'] = 'success'
     elif albumName is None:
         message = {'status': 'failed', 'reason': '相册名不能为空'}
     return JsonResponse(message)
+
 
 '''
     点击相册的事件，跳转至相册内部显示相册所有图片
     如没有图片，则返回status no-picture
 '''
+
+
 def getPictByAlbum(request):
     messege = {}
     if request.session.get('is_login', None):
@@ -281,7 +325,8 @@ def getPictByAlbum(request):
     else:
         return render(request, 'login.html')
 
-#跳转至个人信息界面
+
+# 跳转至个人信息界面
 def changToInfo(request):
     if request.session.get('is_login', None):
         account = request.session.get('user_id', None)
@@ -294,7 +339,8 @@ def changToInfo(request):
     else:
         return render(request, 'login.html')
 
-#跳转至设置界面
+
+# 跳转至设置界面
 def changToSetting(request):
     if request.session.get('is_login', None):
         account = request.session.get('user_id', None)
@@ -306,7 +352,8 @@ def changToSetting(request):
     else:
         return render(request, 'login.html')
 
-#跳转至反馈界面
+
+# 跳转至反馈界面
 def changToFankui(request):
     if request.session.get('is_login', None):
         account = request.session.get('user_id', None)
@@ -318,7 +365,8 @@ def changToFankui(request):
     else:
         return render(request, 'login.html')
 
-#跳转至帮助界面
+
+# 跳转至帮助界面
 def changToHelp(request):
     if request.session.get('is_login', None):
         account = request.session.get('user_id', None)
@@ -330,7 +378,8 @@ def changToHelp(request):
     else:
         return render(request, 'login.html')
 
-#用户修改设置的保存应用
+
+# 用户修改设置的保存应用
 def changSetting(request):
     if request.session.get('is_login', None):
         account = request.session.get('user_id', None)
@@ -342,9 +391,12 @@ def changSetting(request):
     else:
         return render(request, 'login.html')
 
+
 '''
     用户反馈成功后跳转至返回成功界面
 '''
+
+
 def success(request):
     if request.session.get('is_login', None):
         account = request.session.get('user_id', None)
